@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Personnages Bibliques</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #1a2a3a, #2c3e50);
+            padding: 20px;
+        }
+        .container {
+            background: #ffffff;
+            border-radius: 28px;
+            padding: 40px 35px;
+            max-width: 750px;
+            width: 100%;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            transition: all 0.3s;
+        }
+        h1 {
+            font-size: 2.2rem;
+            color: #1a2a3a;
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        h1 span {
+            background: #d4a86a;
+            color: #1a2a3a;
+            font-size: 0.9rem;
+            padding: 2px 16px;
+            border-radius: 40px;
+            font-weight: 600;
+        }
+        .subhead {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #5a6a7a;
+            font-weight: 500;
+            border-bottom: 2px solid #eef2f6;
+            padding-bottom: 14px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .level-badge {
+            background: #e8edf2;
+            padding: 4px 18px;
+            border-radius: 40px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .level-badge.facile {
+            background: #d4edda;
+            color: #155724;
+        }
+        .level-badge.moyen {
+            background: #fff3cd;
+            color: #856404;
+        }
+        .level-badge.difficile {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        #question {
+            font-size: 1.45rem;
+            font-weight: 600;
+            color: #1a2a3a;
+            margin-bottom: 24px;
+            line-height: 1.4;
+            min-height: 80px;
+        }
+        #options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+        .opt-btn {
+            background: #f6f8fa;
+            border: 2px solid #dce1e8;
+            border-radius: 16px;
+            padding: 14px 20px;
+            font-size: 1.05rem;
+            font-weight: 500;
+            color: #1a2a3a;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-align: left;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .opt-btn:hover:not(.disabled) {
+            background: #eaf0f6;
+            border-color: #b0c0d0;
+            transform: scale(1.01);
+        }
+        .opt-btn .letter {
+            background: #dce1e8;
+            border-radius: 50%;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            color: #1a2a3a;
+            flex-shrink: 0;
+            transition: 0.2s;
+        }
+        .opt-btn.correct {
+            border-color: #28a745;
+            background: #d4edda;
+        }
+        .opt-btn.correct .letter {
+            background: #28a745;
+            color: #fff;
+        }
+        .opt-btn.wrong {
+            border-color: #dc3545;
+            background: #f8d7da;
+        }
+        .opt-btn.wrong .letter {
+            background: #dc3545;
+            color: #fff;
+        }
+        .opt-btn.disabled {
+            cursor: default;
+            opacity: 0.7;
+        }
+        .opt-btn.disabled:hover {
+            transform: none;
+        }
+        #feedback {
+            background: #f8f9fa;
+            border-radius: 16px;
+            padding: 16px 20px;
+            margin-bottom: 20px;
+            border-left: 6px solid #d4a86a;
+            display: none;
+            font-size: 1rem;
+        }
+        #feedback .verse {
+            display: block;
+            margin-top: 8px;
+            font-style: italic;
+            color: #5a6a7a;
+            font-weight: 500;
+        }
+        #feedback .verse i {
+            color: #d4a86a;
+            margin-right: 6px;
+        }
+        .actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+        .btn {
+            background: #2c3e50;
+            border: none;
+            color: #fff;
+            font-weight: 600;
+            font-size: 1rem;
+            padding: 12px 32px;
+            border-radius: 40px;
+            cursor: pointer;
+            transition: 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .btn:hover:not(:disabled) {
+            background: #1a2a3a;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+        }
+        .btn:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+            transform: none;
+        }
+        .btn-secondary {
+            background: #dce1e8;
+            color: #1a2a3a;
+        }
+        .btn-secondary:hover:not(:disabled) {
+            background: #c8d0da;
+        }
+        .btn-gold {
+            background: #d4a86a;
+            color: #1a2a3a;
+        }
+        .btn-gold:hover:not(:disabled) {
+            background: #c49650;
+        }
+        #score-final {
+            background: #f0f4f8;
+            border-radius: 24px;
+            padding: 28px 24px;
+            margin-top: 20px;
+            display: none;
+            text-align: center;
+            border: 2px solid #dce1e8;
+        }
+        #score-final h2 {
+            font-size: 2.8rem;
+            color: #1a2a3a;
+        }
+        #score-final .detail {
+            font-size: 1.1rem;
+            color: #3a4a5a;
+            margin: 6px 0 12px;
+        }
+        #score-final .badge {
+            display: inline-block;
+            background: #d4a86a;
+            color: #1a2a3a;
+            font-weight: 700;
+            padding: 6px 24px;
+            border-radius: 40px;
+            font-size: 0.95rem;
+        }
+        #score-final .message {
+            margin: 14px 0 18px;
+            font-style: italic;
+            color: #5a6a7a;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 18px;
+            font-size: 0.8rem;
+            color: #8a9aaa;
+            border-top: 1px solid #eef2f6;
+            padding-top: 16px;
+        }
+        .footer i {
+            color: #d4a86a;
+        }
+        @media (max-width: 480px) {
+            .container {
+                padding: 24px 16px;
+            }
+            h1 {
+                font-size: 1.6rem;
+            }
+            #question {
+                font-size: 1.2rem;
+            }
+            .opt-btn {
+                padding: 12px 14px;
+                font-size: 0.95rem;
+            }
+            .btn {
+                padding: 10px 20px;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>👥 Personnages Bibliques <span>40 Q</span></h1>
+        <div class="subhead">
+            <span id="counter">Question 1 / 40</span>
+            <span id="levelDisplay" class="level-badge">Facile</span>
+            <span id="scoreDisplay">✅ 0 / 0</span>
+        </div>
+
+        <div id="question">Chargement...</div>
+
+        <div id="options"></div>
+
+        <div id="feedback">
+            <span id="feedbackMsg"></span>
+            <span class="verse"><i>📜</i> <span id="verseRef"></span></span>
+        </div>
+
+        <div class="actions">
+            <button class="btn btn-secondary" id="prevBtn" disabled>◀ Précédent</button>
+            <button class="btn" id="nextBtn">Suivant ▶</button>
+            <button class="btn btn-gold" id="submitBtn" style="display:none;">📊 Voir le score</button>
+        </div>
+
+        <div id="score-final">
+            <h2 id="finalScore">0 / 40</h2>
+            <div class="detail" id="finalDetail">Vous avez répondu correctement à 0 question.</div>
+            <div class="badge" id="finalBadge">📖 À revoir</div>
+            <div class="message" id="finalMessage"></div>
+            <button class="btn" id="restartBtn">🔄 Recommencer le quiz</button>
+        </div>
+
+        <div class="footer">
+            <i>✝</i> « Ta parole est une lampe à mes pieds » — Psaume 119:105
+        </div>
+        <a href="formation.html" style="text-decoration: none;color: #3b28a7;">Retoure</a>
+
+    </div>
+
+    <script>
+        const questions = [{
+            question: "Qui a construit l'arche pour échapper au déluge ?",
+            options: ["Abraham", "Noé", "Moïse", "David"],
+            correct: "Noé",
+            niveau: "facile",
+            ref: "Genèse 6:14"
+        }, {
+            question: "Qui est le père de la foi selon la Bible ?",
+            options: ["Abraham", "Isaac", "Jacob", "Joseph"],
+            correct: "Abraham",
+            niveau: "facile",
+            ref: "Romains 4:16"
+        }, {
+            question: "Qui a été le premier roi d'Israël ?",
+            options: ["Saül", "David", "Salomon", "Josué"],
+            correct: "Saül",
+            niveau: "facile",
+            ref: "1 Samuel 10:1"
+        }, {
+            question: "Qui a tué Goliath ?",
+            options: ["David", "Saül", "Jonathan", "Samson"],
+            correct: "David",
+            niveau: "facile",
+            ref: "1 Samuel 17:50"
+        }, {
+            question: "Qui a reçu les tables de la Loi sur le mont Sinaï ?",
+            options: ["Moïse", "Aaron", "Josué", "Élie"],
+            correct: "Moïse",
+            niveau: "facile",
+            ref: "Exode 19:20"
+        }, {
+            question: "Qui a été vendu comme esclave par ses frères ?",
+            options: ["Joseph", "Moïse", "David", "Jacob"],
+            correct: "Joseph",
+            niveau: "facile",
+            ref: "Genèse 37:28"
+        }, {
+            question: "Qui était l'épouse d'Abraham ?",
+            options: ["Sara", "Rachel", "Léa", "Rebecca"],
+            correct: "Sara",
+            niveau: "facile",
+            ref: "Genèse 17:15"
+        }, {
+            question: "Qui a été jeté dans la fosse aux lions ?",
+            options: ["Daniel", "Jérémie", "Élie", "Josué"],
+            correct: "Daniel",
+            niveau: "facile",
+            ref: "Daniel 6:16"
+        }, {
+            question: "Qui a été enlevé au ciel dans un char de feu ?",
+            options: ["Élie", "Élisée", "Ésaïe", "Jérémie"],
+            correct: "Élie",
+            niveau: "facile",
+            ref: "2 Rois 2:11"
+        }, {
+            question: "Qui a succédé à Moïse ?",
+            options: ["Josué", "Caleb", "Aaron", "Éléazar"],
+            correct: "Josué",
+            niveau: "facile",
+            ref: "Josué 1:1-2"
+        }, {
+            question: "Qui était le père de Jean-Baptiste ?",
+            options: ["Zacharie", "Élisabeth", "Siméon", "Anne"],
+            correct: "Zacharie",
+            niveau: "facile",
+            ref: "Luc 1:5-13"
+        }, {
+            question: "Qui a trahi Jésus ?",
+            options: ["Judas", "Pierre", "Jean", "Thomas"],
+            correct: "Judas",
+            niveau: "facile",
+            ref: "Matthieu 26:48-49"
+        }, {
+            question: "Qui a renié Jésus trois fois ?",
+            options: ["Pierre", "Judas", "Jean", "André"],
+            correct: "Pierre",
+            niveau: "facile",
+            ref: "Matthieu 26:75"
+        }, {
+            question: "Qui était le frère de Moïse ?",
+            options: ["Aaron", "Miriam", "Josué", "Caleb"],
+            correct: "Aaron",
+            niveau: "facile",
+            ref: "Exode 4:14"
+        }, {
+            question: "Qui a écrit la plupart des Psaumes ?",
+            options: ["David", "Salomon", "Ésaïe", "Jérémie"],
+            correct: "David",
+            niveau: "facile",
+            ref: "Psaume 23 (Titre)"
+        }, {
+            question: "Qui a construit le Temple de Jérusalem ?",
+            options: ["Salomon", "David", "Ézéchias", "Josias"],
+            correct: "Salomon",
+            niveau: "facile",
+            ref: "1 Rois 6:1"
+        }, {
+            question: "Qui a été appelé le plus grand des prophètes ?",
+            options: ["Jean-Baptiste", "Élie", "Ésaïe", "Jérémie"],
+            correct: "Jean-Baptiste",
+            niveau: "facile",
+            ref: "Luc 7:28"
+        }, {
+            question: "Qui était le fils d'Abraham ?",
+            options: ["Isaac", "Ismaël", "Jacob", "Ésaü"],
+            correct: "Isaac",
+            niveau: "facile",
+            ref: "Genèse 21:3"
+        }, {
+            question: "Qui a vu l'échelle montant au ciel ?",
+            options: ["Jacob", "Abraham", "Isaac", "Joseph"],
+            correct: "Jacob",
+            niveau: "facile",
+            ref: "Genèse 28:12"
+        }, {
+            question: "Qui a interprété les rêves du pharaon ?",
+            options: ["Joseph", "Daniel", "Moïse", "Jérémie"],
+            correct: "Joseph",
+            niveau: "facile",
+            ref: "Genèse 41:14-16"
+        }, {
+            question: "Qui était la mère de Jésus ?",
+            options: ["Marie", "Anne", "Élisabeth", "Miriam"],
+            correct: "Marie",
+            niveau: "moyen",
+            ref: "Matthieu 1:16"
+        }, {
+            question: "Qui a été le premier martyr chrétien ?",
+            options: ["Étienne", "Jacques", "Pierre", "Paul"],
+            correct: "Étienne",
+            niveau: "moyen",
+            ref: "Actes 7:59-60"
+        }, {
+            question: "Qui a remplacé Judas comme apôtre ?",
+            options: ["Matthias", "Barnabas", "Silas", "Étienne"],
+            correct: "Matthias",
+            niveau: "moyen",
+            ref: "Actes 1:26"
+        }, {
+            question: "Qui était le médecin parmi les évangélistes ?",
+            options: ["Luc", "Marc", "Matthieu", "Jean"],
+            correct: "Luc",
+            niveau: "moyen",
+            ref: "Colossiens 4:14"
+        }, {
+            question: "Qui a écrit 13 épîtres du Nouveau Testament ?",
+            options: ["Paul", "Pierre", "Jean", "Jacques"],
+            correct: "Paul",
+            niveau: "moyen",
+            ref: "Romains 1:1"
+        }, {
+            question: "Qui était le père de David ?",
+            options: ["Isaï", "Saül", "Jonathan", "Abner"],
+            correct: "Isaï",
+            niveau: "moyen",
+            ref: "Ruth 4:22"
+        }, {
+            question: "Qui a été sauvé de la fournaise ardente ?",
+            options: ["Shadrach", "Méschach", "Abed-Nego", "Tous les trois"],
+            correct: "Tous les trois",
+            niveau: "moyen",
+            ref: "Daniel 3:23-25"
+        }, {
+            question: "Qui a demandé la sagesse à Dieu ?",
+            options: ["Salomon", "David", "Moïse", "Élie"],
+            correct: "Salomon",
+            niveau: "moyen",
+            ref: "1 Rois 3:9"
+        }, {
+            question: "Qui a été transformé en statue de sel ?",
+            options: ["Femme de Lot", "Lot", "Abraham", "Sarah"],
+            correct: "Femme de Lot",
+            niveau: "moyen",
+            ref: "Genèse 19:26"
+        }, {
+            question: "Qui est le fils de David qui a tenté de prendre le trône ?",
+            options: ["Absalom", "Salomon", "Adonija", "Amnon"],
+            correct: "Absalom",
+            niveau: "moyen",
+            ref: "2 Samuel 15:1-6"
+        }, {
+            question: "Qui était le plus sage des hommes ?",
+            options: ["Salomon", "Daniel", "Moïse", "David"],
+            correct: "Salomon",
+            niveau: "difficile",
+            ref: "1 Rois 3:12"
+        }, {
+            question: "Qui est le disciple que Jésus aimait particulièrement ?",
+            options: ["Jean", "Pierre", "Jacques", "André"],
+            correct: "Jean",
+            niveau: "difficile",
+            ref: "Jean 13:23"
+        }, {
+            question: "Qui a vu la nuée de gloire descendre sur le Tabernacle ?",
+            options: ["Moïse", "Aaron", "Josué", "Élie"],
+            correct: "Moïse",
+            niveau: "difficile",
+            ref: "Exode 40:34-35"
+        }, {
+            question: "Qui a été le plus grand roi d'Israël ?",
+            options: ["David", "Salomon", "Josias", "Ézéchias"],
+            correct: "Salomon",
+            niveau: "difficile",
+            ref: "1 Rois 10:23"
+        }, {
+            question: "Qui a vécu 969 ans ?",
+            options: ["Mathusalem", "Noé", "Adam", "Jared"],
+            correct: "Mathusalem",
+            niveau: "difficile",
+            ref: "Genèse 5:27"
+        }, {
+            question: "Qui a été le père de Jean-Baptiste ?",
+            options: ["Zacharie", "Élisabeth", "Siméon", "Anne"],
+            correct: "Zacharie",
+            niveau: "difficile",
+            ref: "Luc 1:5-13"
+        }, {
+            question: "Qui a été le seul à échapper à la destruction de Sodome ?",
+            options: ["Lot", "Abraham", "Noé", "Jacob"],
+            correct: "Lot",
+            niveau: "difficile",
+            ref: "Genèse 19:29"
+        }, {
+            question: "Qui a été nommé prophète dès le ventre de sa mère ?",
+            options: ["Jérémie", "Ésaïe", "Élie", "Élisée"],
+            correct: "Jérémie",
+            niveau: "difficile",
+            ref: "Jérémie 1:5"
+        }, {
+            question: "Qui a été élevé à la cour de Babylone ?",
+            options: ["Daniel", "Joseph", "Moïse", "Jérémie"],
+            correct: "Daniel",
+            niveau: "difficile",
+            ref: "Daniel 1:3-6"
+        }, {
+            question: "Qui a été le premier à voir le Seigneur dans le Temple ?",
+            options: ["Ésaïe", "Jérémie", "Ézéchiel", "Daniel"],
+            correct: "Ésaïe",
+            niveau: "difficile",
+            ref: "Ésaïe 6:1-5"
+        }, {
+            question: "Qui a été le dernier roi de Juda avant l'exil ?",
+            options: ["Sédécias", "Joachin", "Jojakim", "Josias"],
+            correct: "Sédécias",
+            niveau: "difficile",
+            ref: "2 Rois 25:6-7"
+        }];
+
+        let currentIndex = 0;
+        let userAnswers = new Array(questions.length).fill(null);
+        let quizCompleted = false;
+        let score = 0;
+
+        const questionEl = document.getElementById('question');
+        const optionsEl = document.getElementById('options');
+        const feedbackEl = document.getElementById('feedback');
+        const feedbackMsg = document.getElementById('feedbackMsg');
+        const verseRef = document.getElementById('verseRef');
+        const counterEl = document.getElementById('counter');
+        const levelDisplay = document.getElementById('levelDisplay');
+        const scoreDisplay = document.getElementById('scoreDisplay');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const submitBtn = document.getElementById('submitBtn');
+        const finalScoreEl = document.getElementById('finalScore');
+        const finalDetail = document.getElementById('finalDetail');
+        const finalBadge = document.getElementById('finalBadge');
+        const finalMessage = document.getElementById('finalMessage');
+        const scoreFinalEl = document.getElementById('score-final');
+        const restartBtn = document.getElementById('restartBtn');
+
+        function loadQuestion(index) {
+            const q = questions[index];
+            questionEl.textContent = q.question;
+            counterEl.textContent = `Question ${index + 1} / ${questions.length}`;
+
+            const levelMap = { facile: 'Facile', moyen: 'Moyen', difficile: 'Difficile' };
+            levelDisplay.textContent = levelMap[q.niveau] || 'Facile';
+            levelDisplay.className = 'level-badge ' + q.niveau;
+
+            optionsEl.innerHTML = '';
+            const letters = ['A', 'B', 'C', 'D'];
+            q.options.forEach((opt, i) => {
+                const btn = document.createElement('button');
+                btn.className = 'opt-btn';
+                if (quizCompleted) btn.classList.add('disabled');
+                btn.innerHTML = `<span class="letter">${letters[i]}</span> ${opt}`;
+                btn.dataset.index = i;
+                btn.dataset.value = opt;
+
+                if (userAnswers[index] !== null) {
+                    const selected = userAnswers[index];
+                    if (i === selected) {
+                        btn.classList.add('selected');
+                    }
+                    if (quizCompleted) {
+                        btn.classList.add('disabled');
+                        if (opt === q.correct) btn.classList.add('correct');
+                        else if (i === selected && opt !== q.correct) btn.classList.add('wrong');
+                    }
+                }
+
+                btn.addEventListener('click', function() {
+                    if (quizCompleted) return;
+                    const val = this.dataset.value;
+                    const idx = parseInt(this.dataset.index);
+                    handleAnswer(index, idx, val);
+                });
+                optionsEl.appendChild(btn);
+            });
+
+            if (userAnswers[index] !== null && !quizCompleted) {
+                showFeedback(index);
+            } else {
+                feedbackEl.style.display = 'none';
+            }
+
+            prevBtn.disabled = (index === 0);
+            if (index === questions.length - 1 && !quizCompleted) {
+                nextBtn.style.display = 'none';
+                submitBtn.style.display = 'inline-flex';
+            } else {
+                nextBtn.style.display = 'inline-flex';
+                submitBtn.style.display = 'none';
+            }
+
+            updateScoreDisplay();
+        }
+
+        function handleAnswer(index, optIndex, value) {
+            if (quizCompleted) return;
+            const q = questions[index];
+            userAnswers[index] = optIndex;
+            const btns = optionsEl.querySelectorAll('.opt-btn');
+            btns.forEach((btn, i) => {
+                btn.classList.toggle('selected', i === optIndex);
+            });
+            showFeedback(index);
+            updateScoreDisplay();
+        }
+
+        function showFeedback(index) {
+            const q = questions[index];
+            const answerIdx = userAnswers[index];
+            if (answerIdx === null) {
+                feedbackEl.style.display = 'none';
+                return;
+            }
+            const isCorrect = (q.options[answerIdx] === q.correct);
+            const msg = isCorrect ?
+                `✅ Bonne réponse ! « ${q.correct} » est juste.` :
+                `❌ « ${q.options[answerIdx]} » n'est pas correct. La bonne réponse est : « ${q.correct} ».`;
+            feedbackMsg.textContent = msg;
+            verseRef.textContent = q.ref;
+            feedbackEl.style.display = 'block';
+        }
+
+        function updateScoreDisplay() {
+            let correct = 0,
+                answered = 0;
+            for (let i = 0; i < questions.length; i++) {
+                if (userAnswers[i] !== null) {
+                    answered++;
+                    if (questions[i].options[userAnswers[i]] === questions[i].correct) correct++;
+                }
+            }
+            score = correct;
+            scoreDisplay.textContent = `✅ ${correct} / ${answered}`;
+        }
+
+        function finishQuiz() {
+            quizCompleted = true;
+            let correct = 0;
+            for (let i = 0; i < questions.length; i++) {
+                if (userAnswers[i] !== null && questions[i].options[userAnswers[i]] === questions[i].correct) {
+                    correct++;
+                }
+            }
+            score = correct;
+            const total = questions.length;
+
+            try {
+                localStorage.setItem('quizPersonnages', JSON.stringify({
+                    score: score,
+                    total: total,
+                    date: new Date().toISOString()
+                }));
+            } catch (e) {}
+
+            prevBtn.style.display = 'none';
+            nextBtn.style.display = 'none';
+            submitBtn.style.display = 'none';
+
+            finalScoreEl.textContent = `${score} / ${total}`;
+            finalDetail.textContent = `Vous avez répondu correctement à ${score} question${score > 1 ? 's' : ''} sur ${total}.`;
+
+            const pct = (score / total) * 100;
+            let badgeText, messageText;
+            if (pct >= 80) {
+                badgeText = '🌟 Excellente connaissance des personnages bibliques !';
+                messageText = '« La foi est une ferme assurance des choses qu\'on espère » (Hébreux 11:1)';
+            } else if (pct >= 60) {
+                badgeText = '📖 Bonne maîtrise, continuez à creuser !';
+                messageText = '« Heureux l’homme qui trouve la sagesse » (Proverbes 3:13)';
+            } else if (pct >= 40) {
+                badgeText = '📚 Un bon début, relisez les Écritures !';
+                messageText = '« Cherchez et vous trouverez » (Matthieu 7:7)';
+            } else {
+                badgeText = '🕊️ N’abandonnez pas, la Bible est un trésor de personnages inspirants !';
+                messageText = '« Tu aimeras le Seigneur ton Dieu… » (Marc 12:30)';
+            }
+            finalBadge.textContent = badgeText;
+            finalMessage.textContent = messageText;
+            scoreFinalEl.style.display = 'block';
+
+            const btns = optionsEl.querySelectorAll('.opt-btn');
+            btns.forEach((btn, i) => {
+                btn.classList.add('disabled');
+                const val = btn.dataset.value;
+                const q = questions[currentIndex];
+                if (val === q.correct) btn.classList.add('correct');
+                else if (userAnswers[currentIndex] !== null && i === userAnswers[currentIndex] && val !== q.correct) {
+                    btn.classList.add('wrong');
+                }
+            });
+            loadQuestion(currentIndex);
+        }
+
+        nextBtn.addEventListener('click', function() {
+            if (currentIndex < questions.length - 1) {
+                currentIndex++;
+                loadQuestion(currentIndex);
+            }
+        });
+
+        prevBtn.addEventListener('click', function() {
+            if (currentIndex > 0) {
+                currentIndex--;
+                loadQuestion(currentIndex);
+            }
+        });
+
+        submitBtn.addEventListener('click', function() {
+            const unanswered = userAnswers.some(a => a === null);
+            if (unanswered) {
+                if (!confirm('⚠️ Vous n\'avez pas répondu à toutes les questions. Voulez-vous quand même soumettre ?')) {
+                    return;
+                }
+            }
+            finishQuiz();
+        });
+
+        restartBtn.addEventListener('click', function() {
+            userAnswers = new Array(questions.length).fill(null);
+            quizCompleted = false;
+            currentIndex = 0;
+            scoreFinalEl.style.display = 'none';
+            prevBtn.style.display = 'inline-flex';
+            nextBtn.style.display = 'inline-flex';
+            submitBtn.style.display = 'none';
+            feedbackEl.style.display = 'none';
+            loadQuestion(0);
+            updateScoreDisplay();
+            const btns = optionsEl.querySelectorAll('.opt-btn');
+            btns.forEach(b => b.classList.remove('correct', 'wrong', 'disabled'));
+        });
+
+        loadQuestion(0);
+        updateScoreDisplay();
+
+        try {
+            const saved = localStorage.getItem('quizPersonnages');
+            if (saved) {
+                const data = JSON.parse(saved);
+                console.log(`📊 Dernier score enregistré : ${data.score}/${data.total} (${new Date(data.date).toLocaleDateString()})`);
+            }
+        } catch (e) {}
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'ArrowRight' && !nextBtn.disabled && nextBtn.style.display !== 'none') {
+                nextBtn.click();
+            } else if (e.key === 'ArrowLeft' && !prevBtn.disabled) {
+                prevBtn.click();
+            } else if (e.key === 'Enter' && submitBtn.style.display !== 'none') {
+                submitBtn.click();
+            }
+        });
+    </script>
+</body>
+</html>

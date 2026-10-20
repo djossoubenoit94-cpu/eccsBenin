@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Centre de Formation Spirituelle | Paroisse Siège Vèpka</title>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        /* ===== RESET & BASE ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f7fc;
+            color: #1a2b3e;
+            line-height: 1.7;
+        }
+
+        .container {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        :root {
+            --blanc: #ffffff;
+            --bleu-ciel: #dcf0fe;
+            --bleu-profond: #0d2b44;
+            --bleu-moyen: #1f4a6b;
+            --dore: #c9a84c;
+            --dore-clair: #f3e5ab;
+            --ombre: rgba(13, 43, 68, 0.08);
+        }
+
+        /* ===== MENU ===== */
+        .navbar {
+            background: var(--blanc);
+            box-shadow: 0 2px 20px var(--ombre);
+            padding: 16px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .navbar .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--bleu-profond);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo i {
+            color: var(--dore);
+            font-size: 1.8rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 28px;
+            list-style: none;
+            flex-wrap: wrap;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--bleu-profond);
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: 0.3s;
+            padding-bottom: 4px;
+            border-bottom: 2px solid transparent;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--dore);
+            border-bottom-color: var(--dore);
+        }
+
+        /* ===== BOUTONS ===== */
+        .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: linear-gradient(135deg, var(--dore), #b8922f);
+            color: var(--bleu-profond);
+            font-weight: 700;
+            padding: 14px 36px;
+            border-radius: 60px;
+            text-decoration: none;
+            font-size: 1rem;
+            border: none;
+            cursor: pointer;
+            transition: 0.3s;
+            box-shadow: 0 6px 24px rgba(201, 168, 76, 0.35);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 36px rgba(201, 168, 76, 0.5);
+        }
+
+        .btn-secondary {
+            display: inline-block;
+            background: transparent;
+            color: var(--bleu-profond);
+            font-weight: 600;
+            padding: 10px 24px;
+            border-radius: 60px;
+            border: 2px solid var(--dore);
+            text-decoration: none;
+            transition: 0.3s;
+            cursor: pointer;
+        }
+
+        .btn-secondary:hover {
+            background: var(--dore);
+            color: var(--blanc);
+        }
+
+        /* ===== HERO ===== */
+        .hero {
+            background: linear-gradient(165deg, var(--bleu-profond), var(--bleu-moyen));
+            padding: 70px 0 90px;
+            color: var(--blanc);
+            border-bottom: 6px solid var(--dore);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: center;
+        }
+
+        .hero h1 {
+            font-size: 3.8rem;
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 12px;
+        }
+
+        .hero h1 span {
+            color: var(--dore);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            margin-bottom: 30px;
+        }
+
+        .hero-verse {
+            background: rgba(255, 255, 255, 0.08);
+            padding: 16px 24px;
+            border-left: 4px solid var(--dore);
+            border-radius: 8px;
+            margin-top: 24px;
+            max-width: 450px;
+        }
+
+        .hero-verse .ref {
+            color: var(--dore-clair);
+            font-weight: 600;
+        }
+
+        .hero-image {
+            display: flex;
+            justify-content: center;
+        }
+
+        .hero-image .circle {
+            width: 340px;
+            height: 340px;
+            border-radius: 50%;
+            background: rgba(201, 168, 76, 0.15);
+            border: 2px solid rgba(201, 168, 76, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 8rem;
+            color: var(--dore);
+        }
+
+        /* ===== SECTIONS ===== */
+        .section {
+            padding: 60px 0;
+        }
+
+        .section-alt {
+            background: var(--blanc);
+        }
+
+        .section-title {
+            font-size: 2.4rem;
+            font-weight: 800;
+            color: var(--bleu-profond);
+            text-align: center;
+            margin-bottom: 8px;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: #4a5b6e;
+            max-width: 600px;
+            margin: 0 auto 40px;
+        }
+
+        .section-tag {
+            display: inline-block;
+            background: var(--bleu-ciel);
+            color: var(--bleu-profond);
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 4px 16px;
+            border-radius: 40px;
+            margin-bottom: 8px;
+        }
+
+        /* ===== CARDS ===== */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 28px;
+        }
+
+        .card {
+            background: var(--blanc);
+            border-radius: 20px;
+            padding: 28px 24px;
+            box-shadow: 0 8px 30px var(--ombre);
+            transition: 0.3s;
+            border: 1px solid rgba(201, 168, 76, 0.1);
+        }
+
+        .card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 16px 48px rgba(13, 43, 68, 0.12);
+            border-color: var(--dore);
+        }
+
+        .card .card-icon {
+            width: 52px;
+            height: 52px;
+            background: var(--bleu-ciel);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            color: var(--bleu-profond);
+            margin-bottom: 16px;
+            transition: 0.3s;
+        }
+
+        .card:hover .card-icon {
+            background: var(--dore);
+            color: var(--blanc);
+        }
+
+        .card h3 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--bleu-profond);
+            margin-bottom: 6px;
+        }
+
+        .card p {
+            color: #4a5b6e;
+            font-size: 0.95rem;
+        }
+
+        .card .card-meta {
+            display: flex;
+            gap: 16px;
+            font-size: 0.85rem;
+            color: #6b7a8e;
+            margin: 12px 0 16px;
+        }
+
+        .card .card-meta i {
+            color: var(--dore);
+        }
+
+        .card .btn-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--bleu-profond);
+            font-weight: 600;
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: 0.3s;
+        }
+
+        .card .btn-link:hover {
+            color: var(--dore);
+        }
+
+        .card .btn-link:hover i {
+            transform: translateX(6px);
+        }
+
+        .badge-level {
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            padding: 4px 14px;
+            border-radius: 40px;
+            background: var(--bleu-ciel);
+            color: var(--bleu-profond);
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+
+        .badge-level.intermediaire {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .badge-level.avance {
+            background: #fce4ec;
+            color: #b71c1c;
+        }
+
+        /* ===== PROGRESS ===== */
+        .progress-wrap {
+            background: #eef2f6;
+            border-radius: 40px;
+            height: 6px;
+            overflow: hidden;
+            margin: 10px 0 14px;
+        }
+
+        .progress-wrap .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--dore), #b8922f);
+            border-radius: 40px;
+            width: 0%;
+        }
+
+        /* ===== LEÇONS ===== */
+        .lesson-box {
+            background: var(--blanc);
+            border-radius: 20px;
+            padding: 32px;
+            margin-bottom: 24px;
+            box-shadow: 0 4px 20px var(--ombre);
+            border-left: 5px solid var(--dore);
+        }
+
+        .lesson-box h4 {
+            font-size: 1.3rem;
+            color: var(--bleu-profond);
+            margin-bottom: 8px;
+        }
+
+        .lesson-box .ref {
+            color: var(--dore);
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        /* ===== QUIZ ===== */
+        .quiz-container {
+            background: var(--blanc);
+            border-radius: 20px;
+            padding: 32px;
+            box-shadow: 0 4px 20px var(--ombre);
+            margin-top: 20px;
+        }
+
+        .quiz-question {
+            padding: 16px 0;
+            border-bottom: 1px solid #eef2f6;
+        }
+
+        .quiz-question:last-child {
+            border-bottom: none;
+        }
+
+        .quiz-question .q {
+            font-weight: 600;
+            color: var(--bleu-profond);
+            margin-bottom: 8px;
+        }
+
+        .quiz-question .options label {
+            display: block;
+            padding: 6px 0;
+            cursor: pointer;
+        }
+
+        .quiz-question .options input[type="radio"] {
+            margin-right: 10px;
+        }
+
+        .quiz-result {
+            margin-top: 20px;
+            padding: 16px 24px;
+            border-radius: 12px;
+            background: #eaf7e9;
+            border-left: 5px solid #2e7d32;
+            display: none;
+        }
+
+        .quiz-result .correct {
+            color: #1b5e20;
+            font-weight: 600;
+        }
+
+        .quiz-result .wrong {
+            color: #c62828;
+            font-weight: 600;
+        }
+
+        .quiz-result .explanation {
+            margin-top: 8px;
+            color: #1a2b3e;
+            font-style: italic;
+            background: #f9fbe7;
+            padding: 12px;
+            border-radius: 8px;
+        }
+
+        .btn-check {
+            background: var(--bleu-profond);
+            color: var(--blanc);
+            border: none;
+            padding: 12px 32px;
+            border-radius: 40px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.3s;
+            margin-top: 16px;
+        }
+
+        .btn-check:hover {
+            background: var(--dore);
+            color: var(--bleu-profond);
+        }
+
+        /* ===== CERTIFICAT ===== */
+        .certificate-box {
+            background: linear-gradient(145deg, #fefcf5, #f8f4e8);
+            border: 3px solid var(--dore);
+            border-radius: 24px;
+            padding: 40px;
+            text-align: center;
+            max-width: 500px;
+            margin: 30px auto;
+        }
+
+        .certificate-box i {
+            font-size: 4rem;
+            color: var(--dore);
+            margin-bottom: 10px;
+        }
+
+        .certificate-box h3 {
+            font-size: 1.8rem;
+            color: var(--bleu-profond);
+        }
+
+        .certificate-box .btn-secondary {
+            margin-top: 16px;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 992px) {
+            .hero-grid {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            .hero h1 {
+                font-size: 2.8rem;
+            }
+            .hero-verse {
+                margin: 20px auto 0;
+            }
+            .hero-image .circle {
+                width: 220px;
+                height: 220px;
+                font-size: 5rem;
+            }
+            .nav-links {
+                gap: 14px;
+                margin-top: 12px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+            .section-title {
+                font-size: 1.8rem;
+            }
+            .card {
+                padding: 20px;
+            }
+            .lesson-box {
+                padding: 20px;
+            }
+            .quiz-container {
+                padding: 20px;
+            }
+            .certificate-box {
+                padding: 24px;
+            }
+        }
+
+        /* ===== ANIMATIONS ===== */
+        .fade-up {
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeUp 0.7s ease forwards;
+        }
+
+        @keyframes fadeUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .delay-1 {
+            animation-delay: 0.1s;
+        }
+        .delay-2 {
+            animation-delay: 0.2s;
+        }
+        .delay-3 {
+            animation-delay: 0.3s;
+        }
+        .delay-4 {
+            animation-delay: 0.4s;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ===== MENU ===== -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">
+                <i class="fas fa-church"></i>
+                Paroisse Vèpka
+            </div>
+            <ul class="nav-links">
+                <li><a href="#">Accueil</a></li>
+                <li><a href="#">À propos</a></li>
+                <li><a href="#">Responsables</a></li>
+                <li><a href="#">Ministères</a></li>
+                <li><a href="#">Activités</a></li>
+                <li><a href="#">Galerie</a></li>
+                <li><a href="#" class="active">Apprentissage</a></li>
+                <li><a href="#">Demande de prière</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- ===== HERO ===== -->
+    <section class="hero">
+        <div class="container hero-grid">
+            <div>
+                <span style="background:rgba(255,255,255,0.12);padding:4px 16px;border-radius:40px;font-size:0.8rem;font-weight:600;color:var(--dore);">
+                    <i class="fas fa-graduation-cap"></i> Académie Chrétienne
+                </span>
+                <h1>Centre de <span>Formation</span> Spirituelle</h1>
+                <p>Grandir dans la foi, approfondir la Parole et vivre selon les enseignements du Christ.</p>
+                <a href="#cours" class="btn-primary"><i class="fas fa-play-circle"></i> Commencer l'apprentissage</a>
+                <div class="hero-verse">
+                    <p>« La crainte de l'Éternel est le commencement de la sagesse, et la connaissance du Saint est l'intelligence. »</p>
+                    <span class="ref">— Proverbes 9:10</span>
+                </div>
+            </div>
+            <div class="hero-image">
+                <div class="circle">
+                    <i class="fas fa-bible"></i>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== MODULE 1 : ÉTUDES BIBLIQUES ===== -->
+    <section class="section" id="cours">
+        <div class="container">
+            <span class="section-tag"><i class="fas fa-book"></i> Module 1</span>
+            <h2 class="section-title">Études Bibliques</h2>
+            <p class="section-subtitle">Plongez dans la Parole de Dieu avec des cours structurés pour tous les niveaux.</p>
+
+            <div class="cards-grid">
+                <!-- Carte 1 : Introduction à la Bible -->
+                <div class="card fade-up delay-1">
+                    <span class="badge-level">Débutant</span>
+                    <div class="card-icon"><i class="fas fa-bible"></i></div>
+                    <h3>Introduction à la Bible</h3>
+                    <p>Origine, structure, inspiration et méthodes d'étude des Écritures.</p>
+                    <div class="card-meta">
+                        <span><i class="far fa-clock"></i> 4h</span>
+                        <span><i class="fas fa-layer-group"></i> 6 leçons</span>
+                    </div>
+                    <div class="progress-wrap"><div class="progress-fill" style="width:30%;"></div></div>
+                    <a href="#intro-bible" class="btn-link">Commencer <i class="fas fa-arrow-right"></i></a>
+                </div>
+
+                <!-- Carte 2 : Ancien Testament -->
+                <div class="card fade-up delay-2">
+                    <span class="badge-level">Débutant</span>
+                    <div class="card-icon"><i class="fas fa-scroll"></i></div>
+                    <h3>Ancien Testament</h3>
+                    <p>La création, les patriarches, Moïse, les prophètes et l'histoire d'Israël.</p>
+                    <div class="card-meta">
+                        <span><i class="far fa-clock"></i> 8h</span>
+                        <span><i class="fas fa-layer-group"></i> 14 leçons</span>
+                    </div>
+                    <div class="progress-wrap"><div class="progress-fill" style="width:0%;"></div></div>
+                    <a href="#ancien-testament" class="btn-link">Commencer <i class="fas fa-arrow-right"></i></a>
+                </div>
+
+                <!-- Carte 3 : Nouveau Testament -->
+                <div class="card fade-up delay-3">
+                    <span class="badge-level intermediaire">Intermédiaire</span>
+                    <div class="card-icon"><i class="fas fa-church"></i></div>
+                    <h3>Nouveau Testament</h3>
+                    <p>Vie de Jésus, Évangiles, Actes, Épîtres et l'Apocalypse.</p>
+                    <div class="card-meta">
+                        <span><i class="far fa-clock"></i> 10h</span>
+                        <span><i class="fas fa-layer-group"></i> 10 leçons</span>
+                    </div>
+                    <div class="progress-wrap"><div class="progress-fill" style="width:0%;"></div></div>
+                    <a href="#nouveau-testament" class="btn-link">Commencer <i class="fas fa-arrow-right"></i></a>
+                </div>
+
+                <!-- Carte 4 : Études thématiques -->
+                <div class="card fade-up delay-4">
+                    <span class="badge-level avance">Avancé</span>
+                    <div class="card-icon"><i class="fas fa-lightbulb"></i></div>
+                    <h3>Études thématiques</h3>
+                    <p>La foi, la prière, la sainteté, le pardon, l'amour, le jeûne, le Saint-Esprit.</p>
+                    <div class="card-meta">
+                        <span><i class="far fa-clock"></i> 12h</span>
+                        <span><i class="fas fa-layer-group"></i> 18 leçons</span>
+                    </div>
+                    <div class="progress-wrap"><div class="progress-fill" style="width:0%;"></div></div>
+                    <a href="#thematiques" class="btn-link">Commencer <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== CONTENU DES COURS : INTRODUCTION À LA BIBLE ===== -->
+    <section class="section section-alt" id="intro-bible">
+        <div class="container">
+            <h3 style="font-size:2rem;color:var(--bleu-profond);margin-bottom:8px;">📖 Introduction à la Bible</h3>
+            <p style="color:#4a5b6e;margin-bottom:24px;">6 leçons pour découvrir les fondements des Écritures.</p>
+
+            <!-- Leçon 1 -->
+            <div class="lesson-box fade-up">
+                <h4>Leçon 1 : Qu'est-ce que la Bible ?</h4>
+                <p><strong>Introduction :</strong> La Bible est la Parole de Dieu, une bibliothèque sacrée de 66 livres écrite sur 1500 ans par plus de 40 auteurs. Elle est le fondement de la foi chrétienne.</p>
+                <p><strong>Objectifs :</strong> Définir la Bible, comprendre son caractère inspiré, connaître ses divisions.</p>
+                <p><strong>Contenu :</strong> Le mot "Bible" vient du grec <em>Biblia</em> (les livres). Elle est inspirée par Dieu (2 Timothée 3:16). Malgré la diversité des auteurs, elle présente un message unifié : le salut en Jésus-Christ. Elle se divise en Ancien et Nouveau Testament.</p>
+                <p><strong>Références :</strong> 2 Timothée 3:16-17; 2 Pierre 1:20-21; Hébreux 4:12.</p>
+                <p><strong>Application :</strong> Reconnaître la Bible comme la source ultime de vérité pour ma vie.</p>
+                <p><strong>Prière :</strong> Seigneur, ouvre mes yeux aux merveilles de ta Parole. Amen.</p>
+                <span class="ref">✓ Leçon complète</span>
+            </div>
+
+            <!-- Leçon 2 -->
+            <div class="lesson-box fade-up">
+                <h4>Leçon 2 : Comment la Bible a été écrite ?</h4>
+                <p><strong>Introduction :</strong> Dieu a utilisé des hommes pour écrire son message, dans différents genres littéraires.</p>
+                <p><strong>Objectifs :</strong> Expliquer l'inspiration, distinguer les genres littéraires.</p>
+                <p><strong>Contenu :</strong> L'inspiration est l'action de l'Esprit-Saint. La Bible a été écrite sur papyrus, parchemin, en hébreu, araméen et grec. Genres : Loi, Histoire, Poésie, Prophétie, Évangiles, Épîtres, Apocalypse.</p>
+                <p><strong>Références :</strong> 2 Pierre 1:21; 1 Thessaloniciens 2:13.</p>
+                <p><strong>Application :</strong> Lire la Bible en tenant compte de son genre littéraire.</p>
+                <p><strong>Prière :</strong> Merci Seigneur pour le travail d'inspiration. Amen.</p>
+                <span class="ref">✓ Leçon complète</span>
+            </div>
+
+            <!-- Leçon 3 -->
+            <div class="lesson-box fade-up">
+                <h4>Leçon 3 : Les auteurs de la Bible</h4>
+                <p><strong>Introduction :</strong> Des rois, pêcheurs, médecins, prophètes... Dieu utilise des vies variées.</p>
+                <p><strong>Objectifs :</strong> Connaître les principaux auteurs, comprendre leur diversité.</p>
+                <p><strong>Contenu :</strong> Moïse (Pentateuque), David (Psaumes), Ésaïe (prophète), Matthieu (collecteur d'impôts), Luc (médecin), Paul (13 épîtres).</p>
+                <p><strong>Références :</strong> 1 Timothée 1:1; 2 Pierre 1:20-21.</p>
+                <p><strong>Application :</strong> Dieu peut utiliser n'importe qui pour sa gloire.</p>
+                <p><strong>Prière :</strong> Utilise ma vie, Seigneur, pour ta gloire. Amen.</p>
+                <span class="ref">✓ Leçon complète</span>
+            </div>
+
+            <!-- Leçon 4 -->
+            <div class="lesson-box fade-up">
+                <h4>Leçon 4 : La structure de la Bible</h4>
+                <p><strong>Introduction :</strong> Une bibliothèque bien structurée pour mieux s'y orienter.</p>
+                <p><strong>Objectifs :</strong> Connaître les livres de l'Ancien et du Nouveau Testament.</p>
+                <p><strong>Contenu :</strong> Ancien Testament (39 livres) : Loi, Historiques, Poétiques, Prophétiques. Nouveau Testament (27 livres) : Évangiles, Actes, Épîtres, Apocalypse.</p>
+                <p><strong>Références :</strong> Luc 24:44.</p>
+                <p><strong>Application :</strong> Se familiariser avec la structure pour trouver les passages plus facilement.</p>
+                <p><strong>Prière :</strong> Seigneur, aide-nous à naviguer dans ta Parole. Amen.</p>
+                <span class="ref">✓ Leçon complète</span>
+            </div>
+
+            <!-- Leçon 5 -->
+            <div class="lesson-box fade-up">
+                <h4>Leçon 5 : Comment étudier la Bible</h4>
+                <p><strong>Introduction :</strong> Lire la Bible est une rencontre avec Dieu. La méthode SOAP aide à en tirer des fruits.</p>
+                <p><strong>Objectifs :</strong> Apprendre la méthode SOAP (Scripture, Observation, Application, Prayer).</p>
+                <p><strong>Contenu :</strong> S : Lire le passage. O : Poser des questions (qui, quoi, quand, où). A : Que dit ce passage pour ma vie ? P : Prier en réponse.</p>
+                <p><strong>Références :</strong> Actes 17:11; Jean 5:39.</p>
+                <p><strong>Application :</strong> S'engager à étudier la Bible régulièrement avec la méthode SOAP.</p>
+                <p><strong>Prière :</strong> Donne-nous le désir de creuser ta Parole. Amen.</p>
+                <span class="ref">✓ Leçon complète</span>
+            </div>
+
+            <!-- Leçon 6 -->
+            <div class="lesson-box fade-up">
+                <h4>Leçon 6 : Pourquoi la Bible est importante</h4>
+                <p><strong>Introduction :</strong> La Bible est un guide vital pour notre existence.</p>
+                <p><strong>Objectifs :</strong> Découvrir l'importance de la Bible pour la foi, la vie et l'éternité.</p>
+                <p><strong>Contenu :</strong> Source de vérité (Jean 17:17), guide pour la vie (Psaume 119:105), nourriture spirituelle (Matthieu 4:4), arme spirituelle (Éphésiens 6:17), révélation de Dieu, instrument de salut (Romains 10:17).</p>
+                <p><strong>Références :</strong> Jean 17:17; Psaume 119:105; Matthieu 4:4; Romains 10:17.</p>
+                <p><strong>Application :</strong> Placer la Bible au centre de mes décisions.</p>
+                <p><strong>Prière :</strong> Fais de ta Parole une lumière pour mes pas. Amen.</p>
+                <span class="ref">✓ Leçon complète</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== ANCIEN TESTAMENT (Résumé des 14 leçons) ===== -->
+    <section class="section" id="ancien-testament">
+        <div class="container">
+            <h3 style="font-size:2rem;color:var(--bleu-profond);margin-bottom:8px;">📜 Ancien Testament</h3>
+            <p style="color:#4a5b6e;margin-bottom:24px;">14 leçons complètes sur la création, les patriarches, Moïse, les prophètes et l'histoire d'Israël.</p>
+
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px;">
+                <div class="lesson-box"><h4>1. La Création (Genèse 1-2)</h4><p>Dieu crée le ciel, la terre, les plantes, les animaux, l'homme et la femme à son image. Il voit que tout est bon.</p><span class="ref">✓ Enseignement complet</span></div>
+                <div class="lesson-box"><h4>2. Adam et Ève (Genèse 3)</h4><p>Le péché entre dans le monde. Adam et Ève désobéissent. Dieu promet un Sauveur.</p><span class="ref">✓ Enseignement complet</span></div>
+                <div class="lesson-box"><h4>3. Noé (Genèse 6-9)</h4><p>La méchanceté des hommes. Noé trouve grâce. Dieu sauve sa famille par l'arche.</p><span class="ref">✓ Enseignement complet</span></div>
+                <div class="lesson-box"><h4>4. Abraham (Genèse 12-25)</h4><p>Dieu appelle Abraham. Promesse d'une grande nation. La foi d'Abraham lui est comptée comme justice.</p><span class="ref">✓ Enseignement complet</span></div>
+                <div class="lesson-box"><h4>5. Isaac (Genèse 25-26)</h4><p>Fils de la promesse. Homme de prière. Dieu est fidèle de génération en génération.</p><span class="ref">✓ Enseignement complet</span></div>
+                <div class="lesson-box"><h4>6. Jacob (Genèse 27-35)</h4><p>Il trompe son frère, mais Dieu le transforme et change son nom en Israël.</p><span class="ref">✓ Enseignement complet</span></div>
+                <div class="lesson-box"><h4>7. Joseph (Genèse 37-50)</h4><p>Vendu par ses frères, il devient gouverneur d'Égypte. Dieu transforme le mal en bien.</p><span class="ref">✓ Enseignement complet</span></div>
+                <div class="lesson-box"><h4>8. Moïse (Exode 1-4)</h4><p>Hébreu sauvé des eaux. Dieu l'appelle du buisson ardent pour délivrer Israël.</p><span class="ref">✓ Enseignement complet</span></div>
+                <div class="lesson-box"><h4>9. L'Exode (Exode 5-14)</h4><p>10 plaies, la Pâque, la traversée de la mer Rouge. Dieu délivre son peuple.</p><span class="ref">✓ Enseignement complet</span></div>
+                <div class="lesson-box"><h4>10. Josué (Livre de Josué)</h4><p>Successeur de Moïse, il conduit le peuple en Terre Promise. Jéricho tombe.</p><span class="ref">✓ Enseignement complet</span></div>
+                <div class="lesson-box"><h4>11. Les Juges (Livre des Juges)</h4><p>Cycles de péché, oppression, repentance et délivrance par les juges.</p><span class="ref">✓ Enseignement complet</span></div>
+                <div class="lesson-box"><h4>12. David (1 Samuel 16-1 Rois 2)</h4><p>Berger devenu roi, homme selon le cœur de Dieu, auteur des Psaumes.</p><span class="ref">✓ Enseignement complet</span></div>
+                <div class="lesson-box"><h4>13. Salomon (1 Rois 3-11)</h4><p>Roi de sagesse, construit le Temple, mais tombe dans l'idolâtrie.</p><span class="ref">✓ Enseignement complet</span></div>
+                <div class="lesson-box"><h4>14. Les Prophètes</h4><p>Ésaïe, Jérémie, Ézéchiel, Daniel et les petits prophètes annoncent jugement et espérance.</p><span class="ref">✓ Enseignement complet</span></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== NOUVEAU TESTAMENT
